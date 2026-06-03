@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-const apiKey = process.env.FORCE_API_KEY || process.env.API_KEY || "";
-const secToken = process.env.SEC_TOKEN || "";
+const apiKey = process.env.FORCE_API_KEY || process.env.API_KEY;
+const secToken = process.env.SEC_TOKEN;
 
 function validateRequiredEnv() {
     const missing = [];
