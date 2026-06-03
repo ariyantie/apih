@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
-const API_KEY = process.env.FORCE_API_KEY || process.env.API_KEY;
+const { apiKey: API_KEY } = require('./env');
 
 const STATUS = {
     force: false,
