@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
+const API_KEY = process.env.FORCE_API_KEY || process.env.API_KEY;
 
 const STATUS = {
     force: false,
@@ -8,8 +9,6 @@ const STATUS = {
     triggered_at: null,
     triggered_by: null
 };
-
-const API_KEY = "zenbot-secret-2025";
 
 app.get('/ping', (req, res) => {
     res.json({ ok: true, uptime: process.uptime() });
@@ -21,6 +20,9 @@ app.get('/force-status', (req, res) => {
 
 app.post('/force-update', (req, res) => {
     const { version, by, key } = req.body;
+    if (!API_KEY) {
+        return res.status(500).json({ ok: false, message: "API key belum dikonfigurasi" });
+    }
     if (key !== API_KEY) {
         return res.status(401).json({ ok: false, message: "Unauthorized" });
     }
@@ -36,6 +38,9 @@ app.post('/force-update', (req, res) => {
 
 app.post('/force-reset', (req, res) => {
     const { key } = req.body;
+    if (!API_KEY) {
+        return res.status(500).json({ ok: false, message: "API key belum dikonfigurasi" });
+    }
     if (key !== API_KEY) {
         return res.status(401).json({ ok: false });
     }

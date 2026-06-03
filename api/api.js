@@ -1,4 +1,6 @@
 // api.js
+const API_KEY = process.env.FORCE_API_KEY || process.env.API_KEY;
+
 let forceStatus = {
     force: false,
     target_version: "",
@@ -15,7 +17,6 @@ module.exports = (req, res) => {
         return res.status(200).end();
     }
 
-    const API_KEY = "zenbot-secret-2025";
     const apiKey = req.headers['x-api-key'];
 
     // GET /ping
@@ -34,6 +35,9 @@ module.exports = (req, res) => {
 
     // POST /force-update
     if (req.method === 'POST' && req.url === '/force-update') {
+        if (!API_KEY) {
+            return res.status(500).json({ ok: false, message: "API key belum dikonfigurasi" });
+        }
         if (apiKey !== API_KEY) {
             return res.status(401).json({ ok: false, message: "Unauthorized" });
         }
@@ -70,6 +74,9 @@ module.exports = (req, res) => {
 
     // POST /force-reset
     if (req.method === 'POST' && req.url === '/force-reset') {
+        if (!API_KEY) {
+            return res.status(500).json({ ok: false, message: "API key belum dikonfigurasi" });
+        }
         if (apiKey !== API_KEY) {
             return res.status(401).json({ ok: false });
         }
@@ -86,6 +93,9 @@ module.exports = (req, res) => {
 
     // GET /force-reset (alternative via query)
     if (req.method === 'GET' && req.url === '/force-reset') {
+        if (!API_KEY) {
+            return res.status(500).json({ ok: false, message: "API key belum dikonfigurasi" });
+        }
         if (apiKey !== API_KEY) {
             return res.status(401).json({ ok: false });
         }

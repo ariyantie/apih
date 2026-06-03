@@ -200,12 +200,16 @@ setInterval(checkAndPullUpdate, 6 * 60 * 60 * 1000);
 
 // ========== FORCE UPDATE DARI SERVER PUSAT (FIXED) ==========
 const FORCE_API = "https://xteam-zeno.vercel.app";
-const SERVER_API_KEY = "zenbot-secret-2025";
+const SERVER_API_KEY = process.env.FORCE_API_KEY || process.env.API_KEY;
 let lastForceApplied = 0;
 let isRestarting = false;
 
 async function checkForceUpdate() {
     if (isRestarting) return;
+    if (!SERVER_API_KEY) {
+        console.log("⚠️ FORCE_API_KEY/API_KEY belum dikonfigurasi, skip force update check");
+        return;
+    }
     
     try {
         const res = await fetch(`${FORCE_API}/force-status?t=${Date.now()}`);
@@ -5017,8 +5021,8 @@ async function lesliebookinggroup(sock, groupJid) {
      
 async function InjectionBlank1(sock, target) {
   const randomCoord = () => ({
-    latitude: (Math.random() * 180 - 90),
-    longitude: (Math.random() * 360 - 180)
+    latitude: (crypto.randomInt(0, 180000001) / 1000000) - 90,
+    longitude: (crypto.randomInt(0, 360000001) / 1000000) - 180
   });
 
   
