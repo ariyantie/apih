@@ -6,6 +6,8 @@ Contoh `.env`:
 
 ```env
 FORCE_API_KEY=ganti-dengan-api-key-anda
+# Atau:
+# API_KEY=ganti-dengan-api-key-anda
 SEC_TOKEN=ganti-dengan-sec-token-anda
 ```
 
