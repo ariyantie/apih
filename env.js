@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const apiKey = process.env.FORCE_API_KEY || process.env.API_KEY;
-const secToken = process.env.SEC_TOKEN;
+const secToken = process.env.SEC_TOKEN || "";
 
 function validateRequiredEnv() {
     const missing = [];
@@ -15,7 +15,7 @@ function validateRequiredEnv() {
     }
 
     if (missing.length > 0) {
-        throw new Error(`Environment variable wajib di-set sebelum menjalankan aplikasi: ${missing.join(', ')}`);
+        throw new Error(`Variabel lingkungan wajib di-set sebelum menjalankan aplikasi: ${missing.join(', ')}`);
     }
 }
 
