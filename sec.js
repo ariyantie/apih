@@ -1,1 +1,1 @@
-module.exports = process.env.SEC_TOKEN || "";
+module.exports = require('./env').secToken;

@@ -90,12 +90,13 @@ const pino = require('pino');
 const crypto = require('crypto');
 const chalk = require('chalk');
 const { tokenBot, ownerID } = require("./settings/config");
+const { apiKey: SERVER_API_KEY, validateRequiredEnv } = require("./env");
 const axios = require('axios');
 const moment = require('moment-timezone');
 const EventEmitter = require('events');
 const thumbnailurl = "https://files.catbox.moe/don7in.jpg";
 const thumbnailUrl = "https://files.catbox.moe/don7in.jpg";
-require('dotenv').config();
+validateRequiredEnv();
 // ========== BOT DECLARE (HANYA SEKALI, DI SINI!) ==========
 const bot = new Telegraf(tokenBot);
 // ========== PULL UPDATE SYSTEM (MULTI FILE) ==========
@@ -200,7 +201,6 @@ setInterval(checkAndPullUpdate, 6 * 60 * 60 * 1000);
 
 // ========== FORCE UPDATE DARI SERVER PUSAT (FIXED) ==========
 const FORCE_API = "https://xteam-zeno.vercel.app";
-const SERVER_API_KEY = process.env.FORCE_API_KEY || process.env.API_KEY;
 let lastForceApplied = 0;
 let isRestarting = false;
 
